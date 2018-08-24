@@ -1,0 +1,116 @@
+perl e 'BEGIN{$count=1;$index=1}open(F,"CACTA.seq.fasta");@F=<F>;for($i=0;$i<$#F;$i+=2){if($F[$i]=~/>/){$F[$i]=~/>(.+pilon_\d+_\d+)/;print $1,"\n"}}'
+
+perl -e '$count=1;open(F," MULE.Hconfident.candidates.seq.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){$a=substr($a[$i+1],0,100);$b=substr($a[$i+1],length($F[$i+1])-100,100);chomp $a[$i];print $a[$i],"_",$count++,"\n",$a,"\n",$a[$i],"_",$count++,"\n",$b}' >rice.mule.tag100.seq.fasta
+
+cdhit -i g1403.Hconfident.tag.manually.checked.fasta -o Mutator.tag100.seq.cluster  -c 0.7 -n 5 -d 100 -M 80000 -T 50 -b 40
+
+
+
+perl e '$count=1;open(F,"rice.transposon.data.single.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){if($a[$i]=~/MU/){$a[$i]=~s/\s+/_/g;$a[$i]=~s/\.//g;print $a[$i],"\n",$a[$i+1]}}'
+
+
+perl e '$count=1;open(F,"rice.transposon.data.single.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){if($a[$i]=~/MU/){print $a[$i],$a[$i+1]}}' >rice.transposon.data.mule.single.fasta
+  881  ll
+  882  cat rice.transposon.data.mule.single.fasta |grep '>'
+  883  perl e '$count=1;open(F,"rice.transposon.data.single.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){if($a[$i]=~/MU/){$a[$i]=~s/\s+/_/;print $a[$i],$a[$i+1]}}' >rice.transposon.data.mule.single.fasta 
+  884  ll
+  885  head rice.transposon.data.mule.single.fasta
+  886  perl e '$count=1;open(F,"rice.transposon.data.single.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){if($a[$i]=~/MU/){$a[$i]=~s/ /_/g;print $a[$i],$a[$i+1]}}'
+  887  perl e '$count=1;open(F,"rice.transposon.data.single.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){if($a[$i]=~/MU/){$a[$i]=~s/\s+/_/g;print $a[$i],$a[$i+1]}}'
+  888  perl e '$count=1;open(F,"rice.transposon.data.single.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){if($a[$i]=~/MU/){$a[$i]=~s/\s+/_/g;$a[$i]=~s/\.//g;print $a[$i],$a[$i+1]}}'
+  889  perl e '$count=1;open(F,"rice.transposon.data.single.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){if($a[$i]=~/MU/){$a[$i]=~s/\s+/_/g;$a[$i]=~s/\.//g;print $a[$i],"\n",$a[$i+1]}}'
+  890  perl e '$count=1;open(F,"rice.transposon.data.single.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){if($a[$i]=~/MU/){$a[$i]=~s/\s+/_/g;$a[$i]=~s/\.//g;print $a[$i],"\n",$a[$i+1]}}' >rice.transposon.data.mule.single.fasta 
+  891  ll
+  892  head rice.transposon.data.mule.single.fasta
+  893  perl e '$count=1;open(F,"MULE.candidates.seq.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){$a=substr($a[$i+1],0,20);$b=substr($a[$i+1],length($F[$i+1])20,20);chomp $a[$i];print $a[$i],"_",$count++,"\n",$a,"\n",$a[$i],"_",$count++,"\n",$b}' >rice.mule.tag100.seq.fasta
+  894  ll
+  895  head 100 rice.mule.tag100.seq.fasta
+  896  ll
+  897  mafft -maxiterate 1000 -localpair  -thread 50 -adjustdirection -reorder rice.mule.tag100.seq.fasta >rice.mule.tag100.seq.align
+  898  pwd
+  899  ll
+  900  historyt
+
+
+  perl e '$count=1;open(F,"SoyTE.single.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){if($a[$i]=~/Mutator/){@b=split(" ",$a[$i]);print ">Mutator_",$b[$#b],"\n",$a[$i+1]}}' >Gmax.mule.single.renamed.fasta
+
+  perl -e '$count=1;open(F,"MULE.Hconfident.candidates.seq.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){$a=substr($a[$i+1],0,100);$b=substr($a[$i+1],length($F[$i+1])100,100);chomp $a[$i];unless($hash{$a}){print $a[$i],"_",$count++,"\n",$a,"\n";$hash{$a}=1} unless($hash{$b}){print $a[$i],"_",$count++,"\n",$b,"\n";$hash{$b}=1}}' >Mutator.seq.tag100.seq.fasta
+
+
+/usr/bin/cdhit i Mutator.seq.tag100.seq.fasta o Mutator.clustr  c 0.7 n 5 d 0 M 80000 T 50 b 40 d 100
+
+
+test.list.txt |perl ne '$_=~/>(.+)\.\.\./;print $1,"\n"' >list.txt
+
+
+rm Mutator.candidates.txt;perl Mutator.identification.pl Arabidopsis_pdomain_flanking_blastx.out g1403.invert DNA_transposon_hit_flanking.fasta
+
+makeblastdb  -in formated.fasta  -input_type fasta -dbtype nucl -out Genome_seq
+makeblastdb  -in input.fa -input_type fasta -dbtype nucl -out flank
+
+
+blastn -query /home/zyb/Database/Transposon/SoyTEdatabase/Gm01.mule.fasta -db  flank  -evalue 1e-10 -num_threads 44 -outfmt 6 
+
+blastn query input.fa db MULE_tag   num_threads 44 outfmt 6 
+
+
+blastn -query /home/zyb/Database/Transposon/SoyTEdatabase/Gm01.mule.fasta -db   Gmax.Gm01.mule.flank  num_threads 40 outfmt 6 >DNA_flanking_match
+
+cat *dir/MULE.noconserved.tag.candidates.seq.fasta| perl -alne 'if($_=~/>/){print $_}else{$a=substr($_,0,100);print $a}' |grep '>'|perl -alne '$_=~/>(.+)_arrow.+?(\d+)_(\d+)/;print $1,"\t",$2,"\t",$3'|sort|uniq|wc -l
+cat *dir/MULE.Hconfident.candidates.seq.fasta >>g1403.Hconfident.MULE.candidates.full.seq.fasta
+
+print ">Left_TIR\n",$a,"\n",">Right_TIR\n",$b,"\n";
+
+
+perl -alne 'if($_=~/>/){print $_}else{$a=substr($_,0,100);print $a}'
+
+cdhi -i test.tag.fa  -o test.cluster  -c 0.6 -n 4  -M 80000 -T 50  -sc 1 -b 4
+cat out1|perl alne 'print "\n",$_, if $_=~/>/;print $_ if $_=~/Query/ && $#F==3;'|perl alne 'if($_=~/>/){$_=~s/\s+//g;print $_}else{$F[2]=~s/\*//g;$F[2]=~s/\//g;print $F[2]}' |perl alne 'print unless $_=~/^$/'|perl ne 'chomp $_;if($_=~/>/){if($.==1){print $_,"\n"}else{print "\n",$_,"\n"}}else{print $_}'|perl alne 'BEGIN{$count=1}unless($_=~/>/){$hash{$_}=$count++ unless $hash{$_}}END{$count=1;foreach $key(keys %hash){print ">MULE_",$count++,"\n",$key}}'
+
+cat *dir/MULE.Hconfident.candidates.seq.fasta >>MULE.Hconfident.candidates.seq.fasta
+  perl -e '$count=1;open(F," MULE.Hconfident.candidates.seq.fasta");@a=<F>;for($i=0;$i<$#a;$i+=2){$a=substr($a[$i+1],0,100);$b=substr($a[$i+1],length($F[$i+1])-100,100);chomp $a[$i];print $a[$i],"_",$count++,"\n",$a,"\n",$a[$i],"_",$count++,"\n",$b}' >rice.mule.tag100.seq.fasta
+mafft --maxiterate 1000 --localpair  --thread 50 --adjustdirection rice.mule.tag100.seq.fasta >test.align
+
+
+makeblastdb  in Gmax.mule.Gm01.fasta input_type fasta dbtype nucl out Gmax_Gm01_mule 
+makeblastdb  -in test.fa -input_type fasta -dbtype nucl -out MULE_tag
+
+
+blastn -query g1403.Hconfident.tag.manually.checked.fasta  -db Genome_seq  -evalue 1e-10 -num_threads 44 -outfmt 6 >g1403.mule.blastn.out
+
+blastn -query formated.fasta  -db MULE_tag   -num_threads 44 -outfmt 6 
+
+
+blastn query Gmax.mule.Gm01.fasta db   Gmax.Gm01.mule.flank  num_threads 40 outfmt 6 >DNA_flanking_match
+
+cat *dir/*.seq.fasta |perl alne 'if($_=~/>/){print $_}else{$a=substr($_,0,100);print $a}'  >test.fa
+
+cat *dir/MULE.Hconfident.candidates.seq.fasta |perl -alne 'unless($_=~/>/){$a=substr($_,0,100);$b=substr($_,length($_)-100,100);print ">seq",$count++,"\n",$a,"\n",">seq",$count++,"\n",$b}' >test.fa
+perl -e 'open(F,"test.fa");@a=<F>;for($i=1;$i<$#a;$i+=2){unless($hash{$a[$i]}){print $a[$i-1],$a[$i];$hash{$a[$i]}=1}}' >lowconfi.fa
+
+
+cdhit -i lowconfi.fa -o mule.cluster  -c 0.65 -n 5 -d 100 -M 80000 -T 50  -b 40
+
+
+
+rm list.candi.txt;vim list.candi.txt
+cat list.candi.txt |perl -alne '$_=~/>(.+)\.\.\./;print $1' >list.txt
+perl ~/Script/Fasta_manipulate.pl --method extract --list list.txt --fasta tag.fa>cluster.fasta
+cat test.fa|perl -alne 'if($_=~/>/){print $_}else{$a=substr($_,0,100);print $a}'>tag.fa
+
+mafft --auto --thread 50 --adjustdirection test.fa >test.align
+
+
+
+
+
+perl -e 'open(F,"cluster.fasta");@a=<F>;for($i=1;$i<$#a;$i+=2){unless($hash{$a[$i]){print $a[$i-1],$a[$i];$hash{$a[$i]}=1}}
+
+cat test.list |perl -alne '$_=~/>(.+)\.\.\./;print $1' >list.txt
+perl ~/Script/Fasta_manipulate.pl --list list.txt --fasta test.fa --method extract
+mafft --maxiterate 1000  --genafpair  --thread 50 --adjustdirection test.fa >test.align
+perl -pi -e 's/_R_//' test.align
+
+
+
+

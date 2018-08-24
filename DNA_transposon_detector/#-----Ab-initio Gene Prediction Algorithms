@@ -1,0 +1,14 @@
+#-----Ab-initio Gene Prediction Algorithms
+snap=/usr/bin/snap #location of snap executable
+gmhmme3=/home/soybean/Soft/gm_et_linux_64/gmes_petap/gmhmme3 #location of eukaryotic genemark executable
+gmhmmp=/usr/local/genemarkS/gmhmmp #location of prokaryotic genemark executable
+augustus=/home/soybean/Soft/augustus.2.5.5/bin/augustus #location of augustus executable
+fgenesh=/usr/local/fgenesh/fgenesh #location of fgenesh executable
+evm=/home/soybean/Soft/EVidenceModeler-1.1.1/evidence_modeler.pl #location of EvidenceModeler executable
+tRNAscan-SE=/home/soybean/Soft/tRNAscan-SE-1.3.1/tRNAscan-SE #location of trnascan executable
+snoscan=/home/soybean/Soft/snoscan-0.9.1/snoscan #location of snoscan executable
+
+#-----Other Algorithms
+probuild=/usr/local/genemark-ES/probuild #location of probuild executable (required for genemark)
+
+
